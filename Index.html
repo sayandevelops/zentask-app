@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Responsive Navbar</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZenTask - Dark Theme</title>
   <script src="https://cdn.tailwindcss.com"></script>
+
   <!-- Google Fonts: Poppins -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
   <style>
@@ -13,27 +14,28 @@
     }
   </style>
 </head>
-<body class="bg-[#240046]  h-dvh">
+<body class="bg-[#0f0f0f] text-white h-dvh">
 
-  <nav class="bg-[#10002b] text-white fixed top-0 left-0 w-full z-50">
+  <!-- 🌙 Navbar -->
+  <nav class="bg-[#1a1a1a] text-white fixed top-0 left-0 w-full z-50 shadow-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between h-12 items-center">
         <!-- Logo -->
         <div class="logo-font text-xl font-bold tracking-wider px-3 py-1 backdrop-blur-md bg-white/10 rounded-xl">
-          Zen<span class="text-[#e0aaff]">Task</span>
+          🧠 Zen<span class="text-[#e0aaff]">Task</span>
         </div>
 
         <!-- Desktop Menu -->
         <div class="hidden md:flex space-x-8 font-bold">
-          <a href="#Home" class="hover:text-[#e0aaff] transition italic ">Home</a>
-          <a href="#" class="hover:text-[#e0aaff] transition italic ">Contact</a>
-          <a href="#" class="hover:text-[#e0aaff] transition italic ">About</a>
+          <a href="#Home" class="hover:text-[#e0aaff] transition italic">🏠 Home</a>
+          <a href="#" class="hover:text-[#e0aaff] transition italic">📞 Contact</a>
+          <a href="#" class="hover:text-[#e0aaff] transition italic">ℹ️ About</a>
         </div>
 
         <!-- Hamburger -->
         <div class="md:hidden">
           <button id="menu-btn" class="focus:outline-none">
-            <svg class="w-6  fill="none stroke="currentColor" stroke-width="3"
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="3"
               viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path stroke-linecap="round" stroke-linejoin="round"
                 d="M4 6h16M4 12h16M4 18h16"></path>
@@ -45,99 +47,126 @@
 
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden md:hidden px-10 pb-4 space-y-5 font-semibold">
-      <a href="#Home" class="block hover:text-[#e0aaff] transition italic ">Home</a>
-      <a href="#" class="block hover:text-[#e0aaff] transition italic ">Contact</a>
-      <a href="#" class="block hover:text-[#e0aaff] transition italic ">About</a>
+      <a href="#Home" class="block hover:text-[#e0aaff] transition italic">🏠 Home</a>
+      <a href="#" class="block hover:text-[#e0aaff] transition italic">📞 Contact</a>
+      <a href="#" class="block hover:text-[#e0aaff] transition italic">ℹ️ About</a>
     </div>
   </nav>
 
-<main id="Home" class="bg-[#240046]  flex items-center justify-center h-[120vh] flex-col ">
+  <main id="Home" class="bg-[#0f0f0f] pt-20 flex items-center justify-center flex-col">
 
-<!-- Task Input Section -->
-<section id="task-input" class="w-full max-w-xl backdrop-blur-md bg-white/10 p-6 rounded-2xl shadow-md space-y-4 h-25 overflow-auto ">
-  <h2 class="text-2xl font-semibold text-white">Add a New Task</h2>
-  
+    <!-- 📝 Task Input Section -->
+    <section id="task-input" class="w-full max-w-xl bg-[#1f1f1f] text-white backdrop-blur-md p-6 rounded-2xl shadow-md space-y-4">
+      <h2 class="text-2xl font-semibold">🆕 Add a New Task</h2>
 
+      <!-- Task Title -->
+      <input 
+        id="task-title"
+        type="text" 
+        placeholder="📝 Task Title" 
+        class="w-full px-4 py-2 border border-[#333] rounded-lg bg-[#121212] text-white focus:outline-none focus:ring-2 focus:ring-[#9d4edd]"
+      />
 
+      <!-- Description -->
+      <textarea 
+        id="task-desc"
+        rows="3"
+        placeholder="🗒️ Optional Description" 
+        class="w-full px-4 py-2 border border-[#333] rounded-lg bg-[#121212] text-white focus:outline-none focus:ring-2 focus:ring-[#9d4edd]"
+      ></textarea>
 
-  <!-- Task Title -->
-  <input 
-    id="task-title"
-    type="text" 
-    placeholder="Task Title" 
-    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-  />
+      <!-- Due Date + Priority -->
+      <div class="flex flex-col sm:flex-row gap-4">
+        <input 
+          id="task-date"
+          type="datetime-local" 
+          class="w-full px-4 py-2 border border-[#333] rounded-lg bg-[#121212] text-white focus:outline-none focus:ring-2 focus:ring-[#9d4edd]"
+        />
 
-  <!-- Description -->
-  <textarea 
-    id="task-desc"
-    rows="3"
-    placeholder="Optional Description" 
-    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-  ></textarea>
-
-  <!-- Due Date + Priority -->
-  <div class="flex flex-col sm:flex-row gap-4">
-    <input 
-      id="task-date"
-      type="datetime-local" 
-      class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-    />
-
-    <select 
-      id="task-priority"
-      class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-    >
-      <option value="low">🟢 Low</option>
-      <option value="medium">🟡 Medium</option>
-      <option value="high">🔴 High</option>
-    </select>
-  </div>
-
-  <!-- Add Button -->
-   <div class="buttons flex wra gap-1.5">
-    <button 
-    id="add-task-btn"
-    class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition-all duration-300"
-  >
-    ➕ Add Task
-  </button>
-  <button id="clear-tasks-btn" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg transition-all duration-300">🧹 Clear All</button>
-   </div>
-
-        <!-- Task Display Section -->
-<section id="task-list" class="w-full max-w-xl mt-8 space-y-4 h-40 max-h[200px] overflow-auto">
-  <!-- Tasks will appear here dynamically -->
-</section>
-
-</section>
-<!-- the end of a section -->
-<!-- Motivation section -->
-<div class="transition-all duration-700 ease-in-out transform hover:scale-105">
-  <div class="second-section">
-    <div class="max-w-xl mx-auto mt-6 p-6 bg-white/10 backdrop-blur-md rounded-2xl shadow-lg text-white animate-fade-in-up">
-      <div class="flex items-center space-x-4">
-        <img id="motivation-img" src="your-motivation-img.png" class="w-16 h-16 rounded-full" alt="motivation" />
-        <div>
-          <p id="motivation-quote" class="text-xl font-semibold">"Push yourself, because no one else is going to do it for you."</p>
-          <p class="text-sm text-gray-300 mt-1">— ZenTask</p>
-        </div>
+        <select 
+          id="task-priority"
+          class="w-full px-4 py-2 border border-[#333] rounded-lg bg-[#121212] text-white focus:outline-none focus:ring-2 focus:ring-[#9d4edd]"
+        >
+          <option value="low">🟢 Low</option>
+          <option value="medium">🟡 Medium</option>
+          <option value="high">🔴 High</option>
+        </select>
       </div>
-      <div class="mt-4">
-        <div class="w-full bg-gray-600 rounded-full h-2.5 dark:bg-gray-700">
-          <div class="bg-green-400 h-2.5 rounded-full" id="progress-bar" style="width: 60%"></div>
+
+      <!-- Buttons -->
+      <div class="buttons flex flex-col sm:flex-row gap-2">
+        <button 
+          id="add-task-btn"
+          class="w-full bg-[#7b2cbf] hover:bg-[#9d4edd] text-white py-2 rounded-lg transition-all duration-300"
+        >
+          ➕ Add Task
+        </button>
+        <button 
+          id="clear-tasks-btn" 
+          class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg transition-all duration-300"
+        >
+          🗑️ Clear All
+        </button>
+      </div>
+
+      <!-- 📋 Task Display Section -->
+      <section id="task-list" class="w-full max-w-xl mt-8 space-y-4 max-h-[200px] overflow-auto">
+        <!-- Tasks will appear here dynamically -->
+      </section>
+    </section>
+
+    <!-- 🌟 Motivation Section -->
+    <div class="transition-all duration-700 ease-in-out transform hover:scale-105">
+      <div class="max-w-xl mx-auto mt-6 p-6 bg-[#1f1f1f] backdrop-blur-md rounded-2xl shadow-lg text-white">
+        <div class="flex items-center space-x-4">
+          <img id="motivation-img" src="your-motivation-img.png" class="w-16 h-16 rounded-full" alt="motivation" />
+          <div>
+            <p id="motivation-quote" class="text-xl font-semibold">💪 "Push yourself, because no one else is going to do it for you."</p>
+            <p class="text-sm text-gray-400 mt-1">— ZenTask</p>
+          </div>
         </div>
-        <p class="text-sm mt-1" id="task-status">Tasks Completed: 3/5</p>
+        <div class="mt-4">
+          <div class="w-full bg-gray-700 rounded-full h-2.5">
+            <div class="bg-green-400 h-2.5 rounded-full" id="progress-bar" style="width: 60%"></div>
+          </div>
+          <p class="text-sm mt-1" id="task-status">✅ Tasks Completed: 3/5</p>
+        </div>
       </div>
     </div>
+    <!-- Chatbot Button -->
+  <div id="chatbot-button" class="fixed bottom-6 right-6 z-50">
+    <button
+      class="w-14 h-14 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg hover:bg-blue-700 transition duration-300"
+      onclick="toggleChat()">
+      💬
+    </button>
   </div>
-</div>
 
-</main>
+  <!-- Chatbot Window -->
+  <div id="chatbot-window"
+    class="fixed bottom-24 right-6 w-80 bg-white rounded-xl shadow-xl border border-gray-300 flex flex-col hidden z-50">
+    <div class="flex justify-between items-center p-3 border-b">
+      <h2 class="text-lg font-semibold">Zentask Bot</h2>
+      <button onclick="toggleChat()" class="text-gray-500 hover:text-gray-800 text-xl">×</button>
+    </div>
 
+    <div id="chatbox" class="flex-1 overflow-y-auto p-3 space-y-2 max-h-80 text-sm">
+      <!-- Messages will appear here -->
+    </div>
+
+    <div class="p-3 border-t flex items-center gap-2">
+      <input onsubmit="return false;" type="text" id="user-input" placeholder="Type a message..."
+        class="flex-1 text-black border rounded px-3 py-2 text-sm focus:outline-none"
+        onkeydown="if(event.key === 'Enter') sendMessage()" />
+      <button onclick="sendMessage()" class="bg-blue-600 text-white px-3 py-2 rounded hover:bg-blue-700 text-sm">
+        Send
+      </button>
+    </div>
+  </div>
+
+  </main>
 
   <script src="script.js"></script>
   <script src="motivations.js"></script>
-
 </body>
 </html>

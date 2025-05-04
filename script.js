@@ -48,12 +48,11 @@ function saveTasks() {
 
 function renderTasks() {
   taskListContainer.innerHTML = '';
-
   tasks.slice().reverse().forEach((task) => {
     const taskCard = document.createElement('div');
     taskCard.className = `p-4 rounded-lg shadow-md border-l-4 mb-2 flex items-start gap-3 ${
       task.priority === 'high' ? 'border-red-500' : task.priority === 'medium' ? 'border-yellow-500' : 'border-green-500'
-    } bg-white`;
+    } bg-black`;
 
     // Checkbox
     const checkbox = document.createElement('input');
@@ -68,10 +67,12 @@ function renderTasks() {
 
     const contentDiv = document.createElement('div');
     contentDiv.className = 'flex-1';
+ 
 
     const titleEl = document.createElement('h3');
-    titleEl.className = `text-lg font-semibold ${task.completed ? 'line-through text-gray-400' : ''}`;
+    titleEl.className = `text-lg font-semibold ${task.completed ? 'line-through text-black' : ''}`;
     titleEl.textContent = task.title;
+    titleEl.style.color = "white"
 
     const descEl = document.createElement('p');
     descEl.className = `text-sm ${task.completed ? 'line-through text-gray-400' : 'text-gray-600'}`;
@@ -189,3 +190,78 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+  });
+});
+
+
+
+
+const chatWindow = document.getElementById("chatbot-window");
+const chatbox = document.getElementById("chatbox");
+const input = document.getElementById("user-input");
+
+const GEMINI_API_KEY = "YOUR_GEMINI_API_KEY_HERE"; // Replace with your Gemini key
+
+function toggleChat() {
+  chatWindow.classList.toggle("hidden");
+}
+
+function addMessage(sender, text) {
+  const msg = document.createElement("div");
+  msg.className = sender === "user" ? "text-right" : "text-left";
+  msg.innerHTML = `<span class="inline-block px-3 py-2 rounded-lg ${
+    sender === "user"
+      ? "bg-blue-100 text-blue-800"
+      : "bg-gray-200 text-gray-800"
+  }">${text}</span>`;
+  chatbox.appendChild(msg);
+  chatbox.scrollTop = chatbox.scrollHeight;
+}
+
+async function sendMessage() {
+  const userText = input.value.trim();
+  if (!userText) return;
+  addMessage("user", userText);
+  input.value = "";
+
+  const loading = document.createElement("div");
+  loading.className = "text-left";
+  loading.innerHTML = `<span class="inline-block px-3 py-2 rounded-lg bg-gray-200 text-gray-800">Typing...</span>`;
+  chatbox.appendChild(loading);
+  chatbox.scrollTop = chatbox.scrollHeight;
+
+  try {
+    const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyB5tkKtQJMBS_CIsbDZYDooCYAa_r0DnGY', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: userText }] }]
+      })
+    });
+
+    const data = await response.json();
+    loading.remove();
+
+    const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (reply) {
+      addMessage("bot", reply);
+    } else {
+      addMessage("bot", "❌ No response received.");
+    }
+  } catch (err) {
+    loading.remove();
+    addMessage("bot", "⚠️ Error connecting to Gemini API.");
+    console.error(err);
+  }
+}
