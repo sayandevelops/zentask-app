@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ZenTask</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="icon" type="image/png" href="favicon.png" sizes="32x32" />
+
 
   <!-- Google Fonts: Poppins -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
@@ -20,10 +23,12 @@
   <nav class="bg-[#1a1a1a] text-white fixed top-0 left-0 w-full z-50 shadow-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between h-12 items-center">
-        <!-- Logo -->
-        <div class="logo-font text-xl font-bold tracking-wider px-3 py-1 backdrop-blur-md bg-white/10 rounded-xl">
-          🧠 Zen<span class="text-[#e0aaff]">Task</span>
-        </div>
+  <!-- Logo -->
+<div class="logo-font text-xl font-bold tracking-wider px-3 py-1 backdrop-blur-md bg-white/10 rounded-xl flex items-center gap-2">
+  <img src="favicon.png" alt="ZenTask Logo" class="w-6 h-6 rounded" />
+  EN<span class="text-[#e0aaff]">Task</span>
+</div>
+
 
         <!-- Desktop Menu -->
         <div class="hidden md:flex space-x-8 font-bold">
@@ -133,7 +138,7 @@
         </div>
       </div>
     </div>
-    <!-- Chatbot Button -->
+     <!-- Chatbot Button -->
   <div id="chatbot-button" class="fixed bottom-6 right-6 z-50">
     <button
       class="w-14 h-14 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg hover:bg-blue-700 transition duration-300"
@@ -146,25 +151,32 @@
   <div id="chatbot-window"
     class="fixed bottom-24 right-6 w-80 bg-white rounded-xl shadow-xl border border-gray-300  flex-col hidden z-50">
     <div class="flex justify-between items-center p-3 border-b">
-      <h2 class="text-lg font-semibold">Zentask Bot</h2>
+      <h2 class="text-lg font-semibold text-black">Zentask Bot</h2>
       <button onclick="toggleChat()" class="text-gray-500 hover:text-gray-800 text-xl">×</button>
     </div>
 
-    <div id="chatbox" class="flex-1 overflow-y-auto p-3 space-y-2 max-h-80 text-sm">
+    <div id="chatbox" class="flex-1 overflow-y-auto p-3 space-y-2 h-80 max-h-80 text-sm">
       <!-- Messages will appear here -->
     </div>
 
     <div class="p-3 border-t flex items-center gap-2">
-      <input onsubmit="return false" type="text" id="user-input" placeholder="Type a message..."
-        class="flex-1 text-black border rounded px-3 py-2 text-sm focus:outline-none"
+      <input
+        type="text"
+        id="user-input"
+        placeholder="Type your message..."
+        class="flex-1 border border-gray-300 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
         onkeydown="if(event.key === 'Enter') sendMessage()" />
-      <button onclick="sendMessage()" class="bg-blue-600 text-white px-3 py-2 rounded hover:bg-blue-700 text-sm">
+    
+      <button onclick="sendMessage()"
+        class="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition text-sm shadow-md">
         Send
       </button>
     </div>
-  </div>
 
   </main>
+
+
+  
 
   <script src="script.js"></script>
   <script src="motivations.js"></script>

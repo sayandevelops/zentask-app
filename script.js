@@ -205,63 +205,88 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-const chatWindow = document.getElementById("chatbot-window");
-const chatbox = document.getElementById("chatbox");
-const input = document.getElementById("user-input");
+// HTML theke chatbot window, chatbox ar input field ke dhora hocche
+const chatWindow = document.getElementById("chatbot-window"); // Chatbot window ta
+const chatbox = document.getElementById("chatbox");           // Jeikhane message gula show hobe
+const input = document.getElementById("user-input");          // User input likhbe je box e
 
-const GEMINI_API_KEY = "YOUR_GEMINI_API_KEY_HERE"; // Replace with your Gemini key
+input.style.color ="black"
 
+// Ei function ta chatbot window ke show/hide korar jonno
 function toggleChat() {
   chatWindow.classList.toggle("hidden");
 }
 
+// Ei function message add kore chatbox e — user ba bot-er message
 function addMessage(sender, text) {
-  const msg = document.createElement("div");
-  msg.className = sender === "user" ? "text-right" : "text-left";
-  msg.innerHTML = `<span class="inline-block px-3 py-2 rounded-lg ${
-    sender === "user"
-      ? "bg-blue-100 text-blue-800"
-      : "bg-gray-200 text-gray-800"
-  }">${text}</span>`;
-  chatbox.appendChild(msg);
+  const msgWrapper = document.createElement("div");
+  msgWrapper.className = `flex w-full ${sender === "user" ? "justify-end" : "justify-start"}`;
+
+  const bubble = document.createElement("div");
+  bubble.className = `max-w-[75%] px-4 py-2 rounded-2xl text-sm leading-relaxed shadow 
+    ${sender === "user"
+      ? "bg-blue-600 text-white rounded-br-none"
+      : "bg-gray-200 text-gray-800 rounded-bl-none"}`;
+
+  // If bot, convert Markdown to HTML
+  if (sender === "bot") {
+    bubble.innerHTML = marked.parse(text);
+  } else {
+    bubble.textContent = text;
+  }
+
+  msgWrapper.appendChild(bubble);
+  chatbox.appendChild(msgWrapper);
   chatbox.scrollTop = chatbox.scrollHeight;
 }
 
-async function sendMessage() {
-  const userText = input.value.trim();
-  if (!userText) return;
-  addMessage("user", userText);
-  input.value = "";
 
+// Main function — user message pathay, loading dekhay, bot reply ante Gemini API call kore
+async function sendMessage() {
+  const userText = input.value.trim(); // User input ta nicche and trim kore (extra space badh dicche)
+  if (!userText) return; // Jodi kichu na likhe pathay, taile return kore
+
+  addMessage("user", userText); // User message chatbox e dekhanor jonno
+  input.value = ""; // Input field ta empty kore dicche
+
+  // Loading message add kora hocche — "Typing..." dekhabe bot typing korar moto
   const loading = document.createElement("div");
   loading.className = "text-left";
-  loading.innerHTML = `<span class="inline-block px-3 py-2 rounded-lg bg-gray-200 text-gray-800">Typing...</span>`;
+  loading.innerHTML = `
+  <div class="bg-gray-200 text-gray-800 px-4 py-2 rounded-2xl max-w-[75%] animate-pulse">
+    Typing<span class="dot1">.</span><span class="dot2">.</span><span class="dot3">.</span>
+  </div>`;
+
   chatbox.appendChild(loading);
   chatbox.scrollTop = chatbox.scrollHeight;
 
   try {
+    // Gemini API te POST request pathano hocche user er message niye
     const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyB5tkKtQJMBS_CIsbDZYDooCYAa_r0DnGY', {
-      method: "POST",
+      method: "POST", // POST method use kora hocche
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json" // JSON format bole dicche
       },
       body: JSON.stringify({
-        contents: [{ parts: [{ text: userText }] }]
+        contents: [{ parts: [{ text: userText }] }] // API ke user input pathano hocche
       })
+      
     });
 
-    const data = await response.json();
-    loading.remove();
+    const data = await response.json(); // API theke JSON response nicche
+    loading.remove(); // Typing message ta remove kore dicche
 
+    // Bot-er reply extract kora hocche
     const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
     if (reply) {
-      addMessage("bot", reply);
+      addMessage("bot", reply); // Bot reply thakle show kora hocche
     } else {
-      addMessage("bot", "❌ No response received.");
+      addMessage("bot", "❌ No response received."); // Kono reply na paile error message
     }
   } catch (err) {
-    loading.remove();
-    addMessage("bot", "⚠️ Error connecting to Gemini API.");
-    console.error(err);
+    loading.remove(); // Error holeo "Typing..." message ta remove kore
+    addMessage("bot", "⚠️ Error connecting to Gemini API."); // Connection error message
+    console.error(err); // Console e error ta print korbe (developer jante parbe)
   }
 }
